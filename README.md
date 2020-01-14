@@ -48,7 +48,7 @@ e.g. python gaze.py -n -b
 
 •	**Updating the eyes:**
 
-Cozmo's eyes are bitmaps and stored in several folders (eyes_blink, eyes_image, std_eyes_image, costum). These images are called in the script. The images are shown on the screen 5 times for 200ms. This can be adapated by changing the following lines:
+Cozmo's eyes are bitmaps and stored in several folders (eyes_blink, eyes_image, std_eyes_image, costum). These images are called in the script. The images are shown on the screen 5 times for 200ms. This can be adapted by changing the following lines:
 
 ```
  num_loops = 5    # Increase the number of blinks here. This is 5 blinks in a loop
@@ -91,4 +91,4 @@ gaze_blink
 ```
 
 -----
-Contact Ruud at [@ruudhortensius](https://www.twitter.com/ruudhortensius) or [via email](mailto:ruud.hortensius@glasgow.ac.uk) and Bish [via email](mailto:Bishakha.Chaudhury@glasgow.ac.uk)
+Contact Ruud at [@ruudhortensius](https://www.twitter.com/ruudhortensius) or [via email](mailto:ruud.hortensius@glasgow.ac.uk) or Bish [via email](mailto:Bishakha.Chaudhury@glasgow.ac.uk)
