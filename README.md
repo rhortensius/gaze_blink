@@ -48,7 +48,9 @@ e.g. python gaze.py -n -b
 
 •	**Updating the eyes:**
 
-``
+
+
+```
 gaze_blink
 │   README.md
 │   gaze_blink.py    
