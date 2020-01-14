@@ -48,3 +48,26 @@ e.g. python gaze.py -n -b
 
 •	**Updating the eyes:**
 
+``
+gaze_blink
+│   README.md
+│   gaze_blink.py    
+│
+└───eyes_blink
+│   │   eyes_blink1.png
+│   │   eyes_blink2.png
+│   │   eyes_blink3.png
+│   │   ...
+│   
+└───eyes_image
+    │   eyes_left1.png
+    │   eyes_left2.png
+    │   eyes_left3.png
+    │   ...
+│   
+└───std_eyes_image
+    │   eyes_left1.png
+    │   eyes_left2.png
+    │   eyes_left3.png
+    │   ...
+```
