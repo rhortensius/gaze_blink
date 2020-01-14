@@ -1,5 +1,4 @@
-# gaze_blink
-Gaze and blink for the Cozmo robot
+# Gaze and blink for the Cozmo robot
 
 By Bishakha Chaudhury (https://github.com/chaudhuryB/) and Ruud Hortensius (https://github.com/rhortensius), University of Glasgow, 2019-2020
 
