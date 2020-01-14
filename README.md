@@ -91,4 +91,4 @@ gaze_blink
 ```
 
 -----
-Contact Ruud at [@ruudhortensius](www.twitter.com/ruudhortensius) or [via email](ruud.hortensius@glasgow.ac.uk) and Bish [via email](Bishakha.Chaudhury@glasgow.ac.uk)
+Contact Ruud at [@ruudhortensius](https://www.twitter.com/ruudhortensius) or [via email](mailto:ruud.hortensius@glasgow.ac.uk) and Bish [via email](mailto:Bishakha.Chaudhury@glasgow.ac.uk)
