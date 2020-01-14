@@ -11,13 +11,13 @@ Before you can run the script you need to install the SDK for Cozmo and some lib
 Note: the script was created with python version 3.5.3 (with pip installed). 
 
 The following dependencies need to be installed:
-numpy 1.13.0    : https://pypi.org/project/numpy/1.13.0/
+numpy 1.13.0    : https://pypi.org/project/numpy/1.13.0/  
 ```pip install numpy==1.13.0```   
 
-cozmoclad 1.5.0 : https://pypi.org/project/cozmoclad/1.5.0/
+cozmoclad 1.5.0 : https://pypi.org/project/cozmoclad/1.5.0/  
 ```pip install cozmoclad==1.5.0```   
 
-cozmo 0.14.0    : https://pypi.org/project/cozmo/0.14.0/
+cozmo 0.14.0    : https://pypi.org/project/cozmo/0.14.0/  
 ```pip install cozmo==0.14.0```   
 
 
@@ -27,7 +27,7 @@ cozmo 0.14.0    : https://pypi.org/project/cozmo/0.14.0/
 2.	Connect to the SDK
 3.	Run a command, e.g., python gaze.py -n -b
 
-With the gaze_blink script you can loop left-gaze (natural/standard), right-gaze (natural/standard) or blink. You can use --help to show the help string
+With the gaze_blink script you can loop left-gaze (natural/standard), right-gaze (natural/standard) or blink. 
 
 -h (--help)				Show the help string
 
@@ -47,4 +47,5 @@ e.g. python gaze.py -s -l -r (--right)		Cozmo looks right
 e.g. python gaze.py -s -r -b (--blink)		Cozmo's eyes look aj=head and blink
 e.g. python gaze.py -n -b
 
+•	**Updating the eyes:**
 
