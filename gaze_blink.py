@@ -62,7 +62,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
     # display each image on Cozmo's face for duration_s seconds (Note: this
     # is clamped at 30 seconds max within the engine to prevent burn-in)
     # repeat this num_loops times
-    num_loops = 5    # Increase the number of blinks here. This is 5 blinks in a loop
+    num_loops = 20    # Increase the number of blinks here. This is 5 blinks in a loop
     duration_s = 0.02   # Increase time here to make it slower
 
     print("Press CTRL-C to quit (or wait %s seconds to complete)" % int(num_loops*duration_s) )
@@ -86,12 +86,12 @@ cozmo.robot.Robot.drive_off_charger_on_connect = False
 
 
 def handle_input(argv):    
-    help_string = 'gaze.py -h (--help) -s (--standard) -n (--natural)> <-l (--left) -r (--right) >' 
+    help_string = 'gaze.py -h (--help) -s (--standard) -n (--natural)> <-l (--left) -r (--right) -u (--undilated) -d (--dilated)>' 
     global gaze_type
     global gaze_side
     
     try:
-        opts, args = getopt.getopt(argv,"hsnlrb",["help","standard", "natural", "left", "right", "blink"])
+        opts, args = getopt.getopt(argv,"hsnlrb",["help","standard", "natural", "left", "right", "blink", "undilated", "dilated"])
     except getopt.GetoptError:
         print(help_string)
         exit(2)
@@ -99,7 +99,7 @@ def handle_input(argv):
     
     for opt, arg in opts:
         if opt in ("-h", "--help"):
-            print("python 'gaze_blink.py -h (--help) -s (--standard) -n (--natural)> <-l (--left) -r (--right) --b (--blink)>\n"\
+            print("python 'gaze_blink.py -h (--help) -s (--standard) -n (--natural)> <-l (--left) -r (--right) --b (--blink) -u (--undilated) -d (--dilated) >\n"\
                   "-h (--help)           Show the help string\n\n"\
                   "Eye animation arguments. The standard and natural has no effect on blink at the moment. It affects the left/right gaze:\n"\
                   "-s (--standard)     Square eyes with no animation\n"\
@@ -112,7 +112,9 @@ def handle_input(argv):
                   "-r (--right)         Cozmo looks right.\n" \
                   "                    e.g. python gaze.py -s -r\n\n"\
                   "-b (--blink)      Cozmo's eyes look aj=head and blink\n"\
-                  "                    e.g. python gaze.py -n -b\n\n")
+                  "                    e.g. python gaze.py -n -b\n\n"
+                  "-t (--tiny)      Cozmo's tiny eyes look aj=head and blink\n"\
+                  "                    e.g. python gaze.py -t -t\n\n")
             exit(0)
         elif opt in ("-r", "--right"):
             gaze_side = "eyes_right"
@@ -121,6 +123,12 @@ def handle_input(argv):
         elif opt in ("-b", "--blink"):
             gaze_side = "eyes_blink"
             gaze_type = "eyes_blink"
+        elif opt in ("-u", "--undilated"):
+            gaze_side = "eyes_undilated"
+            gaze_type = "eyes_undilated"
+        elif opt in ("-d", "--dilated"):
+            gaze_side = "eyes_dilated"
+            gaze_type = "eyes_dilated"
         elif opt in ("-n", "--natural"):
             gaze_type = "eyes_image"
         elif opt in ("-s", "--standard"):
@@ -133,7 +141,7 @@ def handle_input(argv):
     
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("python 'gaze_blink.py -h (--help) -s (--standard) -n (--natural)> <-l (--left) -r (--right) -b (--blink)>\n")
+        print("python 'gaze_blink.py -h (--help) -s (--standard) -t (--tiny) -n (--natural)> <-l (--left) -r (--right) -b (--blink)>\n")
     elif handle_input(sys.argv[1:]):
         cozmo.run_program(cozmo_program)
     exit(0)

@@ -30,7 +30,7 @@ With the gaze_blink script you can loop left-gaze (natural/standard), right-gaze
 
 -h (--help)				Show the help string
 
-```python 'gaze_blink.py -h (--help) -s (--standard) -n (--natural)> <-l (--left) -r (--right) --b (--blink)```
+```python 'gaze_blink.py -h (--help) -s (--standard) -n (--natural)> <-l (--left) -r (--right) --b (--blink) -u (--undilated) -d (--dilated)```
 
 Eye animation arguments. The standard and natural has no effect on blink at the moment. It affects the left/right gaze:
 
@@ -44,7 +44,9 @@ Gaze direction arguments:
 -l (--left)    					Cozmo looks left
 e.g. python gaze.py -s -l -r (--right)		Cozmo looks right
 e.g. python gaze.py -s -r -b (--blink)		Cozmo's eyes look aj=head and blink
-e.g. python gaze.py -n -b
+e.g. python gaze.py -n -b 		
+e.g. python gaze.py -n -d
+e.g. python gaze.py -n -u 		 		
 
 •	**Updating the eyes:**
 
