@@ -7,6 +7,7 @@ import getopt
 import os
 import sys 
 import time
+import keyboard #pip3 install keyboard
 
 try:
     from PIL import Image
@@ -14,6 +15,7 @@ except ImportError:
     sys.exit("Cannot import from PIL: Do `pip3 install --user Pillow` to install")
 
 import cozmo
+           
 
 face_images = [] 
 gaze_type = "std_eyes_image"
@@ -25,7 +27,7 @@ def get_in_position(robot: cozmo.robot.Robot):
         with robot.perform_off_charger():
             robot.set_lift_height(0.0).wait_for_completed()
             robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE).wait_for_completed()
-           
+
             
 def setup_images(image_name):
     global face_images
@@ -62,21 +64,49 @@ def cozmo_program(robot: cozmo.robot.Robot):
     # display each image on Cozmo's face for duration_s seconds (Note: this
     # is clamped at 30 seconds max within the engine to prevent burn-in)
     # repeat this num_loops times
-    num_loops = 20    # Increase the number of blinks here. This is 5 blinks in a loop
+    num_loops = 2    # Increase the number of blinks here. This is 5 blinks in a loop
     duration_s = 0.02   # Increase time here to make it slower
+    
+
+    #robot.play_audio(cozmo.audio.AudioEvents.Sfx_Flappy_Increase)
 
     print("Press CTRL-C to quit (or wait %s seconds to complete)" % int(num_loops*duration_s) )
 
-    for _ in range(num_loops):
-       
+    #for _ in range(num_loops):
+    while True:
         for image in face_images:
             robot.display_oled_face_image(image, duration_s * 1000.0)
             time.sleep(duration_s)
         robot.display_oled_face_image(face_images[-1], 2000.0)
         time.sleep(2)
-    robot.display_oled_face_image(face_images[-1], 5000.0)
-    time.sleep(5)
+        if keyboard.is_pressed("w"):
+        	print("You pressed w")
+        	robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE, duration=6.0, in_parallel=True)
+        	action1 = robot.say_text("Yeaaaaaaaaaaaaaahhh",  voice_pitch=-1, in_parallel=True)
+        	action2 = robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE, in_parallel=True)
+        	action3 = robot.set_lift_height(0.0, in_parallel=True)
+        	action4=robot.display_oled_face_image(face_images[6], 5000.0, in_parallel=True)
+        	break    
+        if keyboard.is_pressed("l"):
+        	print("You pressed l")
+        	robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE, duration=6.0, in_parallel=True)
+        	action1 = robot.say_text("Nooooooooh",  voice_pitch=-1, in_parallel=True)
+        	action2 = robot.set_head_angle(cozmo.robot.MIN_HEAD_ANGLE, in_parallel=True)
+        	action3 = robot.set_lift_height(0.0, in_parallel=True)
+        	action4=robot.display_oled_face_image(face_images[6], 5000.0, in_parallel=True)
+        	break       
 
+    robot.display_oled_face_image(face_images[-1], 5000.0)
+     
+    while True:
+        for image in face_images:
+            robot.display_oled_face_image(image, duration_s * 1000.0)
+            time.sleep(duration_s)
+        robot.display_oled_face_image(face_images[-1], 2000.0)
+        time.sleep(2)
+        if keyboard.is_pressed("q"):
+        	print("You pressed q")
+        	break   
 # Cozmo is moved off his charger contacts by default at the start of any program.
 # This is because not all motor movements are possible whilst drawing current from
 # the charger. In cases where motor movements are not required, such as this example
@@ -141,7 +171,7 @@ def handle_input(argv):
     
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("python 'gaze_blink.py -h (--help) -s (--standard) -t (--tiny) -n (--natural)> <-l (--left) -r (--right) -b (--blink)>\n")
+        print("python 'gaze_blink.py -h (--help) -s (--standard) -n (--natural)> <-l (--left) -r (--right) -b (--blink) -u (--undilated) -d (--dilated)>\n")
     elif handle_input(sys.argv[1:]):
         cozmo.run_program(cozmo_program)
     exit(0)
