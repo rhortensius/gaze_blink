@@ -49,9 +49,13 @@ def cozmo_program(robot: cozmo.robot.Robot):
     
     get_in_position(robot)
     # load some images and convert them for display cozmo's face              
-    setup_images("eyes_image/eyes.png")
-    setup_images("eyes_image/eyes.png")  
     
+    
+    #setup_images("eyes_image/eyes_experimental.png")
+    #setup_images("eyes_image/eyes_experimental.png")  
+    setup_images("eyes_image/%s.png" % (gaze_type))
+    setup_images("eyes_image/%s.png" % (gaze_type))
+        
     for i in range(1, 7, 1):
         #print("close %d" %i)
         setup_images("%s/%s%d.png" % (gaze_type, gaze_side, i))
