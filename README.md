@@ -1,5 +1,7 @@
 # Gaze and blink for the Cozmo robot
 
+UPDATE: now includes emotional reactions *and* face following! Note the emotional expressions are very early stage.
+
 By Bishakha Chaudhury (https://github.com/chaudhuryB/) and Ruud Hortensius (https://github.com/rhortensius), University of Glasgow, 2019-2020
 
 •	**Install:**
