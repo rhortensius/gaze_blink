@@ -14,8 +14,11 @@ try:
 except ImportError:
     sys.exit("Cannot import from PIL: Do `pip3 install --user Pillow` to install")
 
+import asyncio
+import time
+
 import cozmo
-           
+from cozmo.util import degrees, distance_mm, speed_mmps           
 
 face_images = [] 
 gaze_type = "std_eyes_image"
@@ -28,7 +31,38 @@ def get_in_position(robot: cozmo.robot.Robot):
             robot.set_lift_height(0.0).wait_for_completed()
             robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE).wait_for_completed()
 
-            
+def follow_faces(robot: cozmo.robot.Robot):
+    '''The core of the follow_faces program'''
+
+    # Move lift down and tilt the head up
+    #robot.move_lift(-3)
+    #robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE).wait_for_completed()
+
+    face_to_follow = None
+
+    #print("Press CTRL-C to quit")
+    while True:
+        turn_action = None
+        if face_to_follow:
+            # start turning towards the face
+            turn_action = robot.turn_towards_face(face_to_follow, in_parallel=True)
+
+        if not (face_to_follow and face_to_follow.is_visible):
+            # find a visible face, timeout if nothing found after a short while
+            try:
+                face_to_follow = robot.world.wait_for_observed_face(timeout=30)
+            except asyncio.TimeoutError:
+                print("Didn't find a face - exiting!")
+                return
+
+        if turn_action:
+            # Complete the turn action if one was in progress
+            turn_action.wait_for_completed()
+
+        time.sleep(.1)
+
+#cozmo.run_program(follow_faces, use_viewer=True, force_viewer_on_top=True)
+          
 def setup_images(image_name):
     global face_images
     image = Image.open(image_name)
@@ -48,11 +82,9 @@ def cozmo_program(robot: cozmo.robot.Robot):
     global gaze_side
     
     get_in_position(robot)
+    
     # load some images and convert them for display cozmo's face              
     
-    
-    #setup_images("eyes_image/eyes_experimental.png")
-    #setup_images("eyes_image/eyes_experimental.png")  
     setup_images("eyes_image/%s.png" % (gaze_type))
     setup_images("eyes_image/%s.png" % (gaze_type))
         
@@ -77,7 +109,31 @@ def cozmo_program(robot: cozmo.robot.Robot):
     print("Press CTRL-C to quit (or wait %s seconds to complete)" % int(num_loops*duration_s) )
 
     #for _ in range(num_loops):
+    face_to_follow = None
     while True:
+        turn_action = None
+        if face_to_follow:
+            # start turning towards the face
+            turn_action = robot.turn_towards_face(face_to_follow, in_parallel=True)
+            robot.display_oled_face_image(face_images[1], 5000.0, in_parallel=True)
+
+        if not (face_to_follow and face_to_follow.is_visible):
+            # find a visible face, timeout if nothing found after a short while
+            robot.display_oled_face_image(face_images[1], 10000.0, in_parallel=True)
+            try:
+                robot.display_oled_face_image(face_images[1], 10000.0, in_parallel=True)
+                face_to_follow = robot.world.wait_for_observed_face(timeout=30)
+            except asyncio.TimeoutError:
+                print("Didn't find a face")
+                robot.display_oled_face_image(face_images[1], 10000.0, in_parallel=True)
+                #return
+
+        if turn_action:
+            # Complete the turn action if one was in progress
+            turn_action.wait_for_completed()
+
+        time.sleep(.1)
+        
         for image in face_images:
             robot.display_oled_face_image(image, duration_s * 1000.0)
             time.sleep(duration_s)
@@ -85,25 +141,26 @@ def cozmo_program(robot: cozmo.robot.Robot):
         time.sleep(2)
         if keyboard.is_pressed("w"):
         	print("You pressed w")
-        	robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE, duration=6.0, in_parallel=True)
-        	action1 = robot.say_text("Yeaaaaaaaaaaaaaahhh",  voice_pitch=-1, in_parallel=True)
+        	action1 = robot.say_text("Yeaaaaaaaaaaaaaahhh",  voice_pitch=1, in_parallel=True)
         	action2 = robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE, in_parallel=True)
         	action3 = robot.set_lift_height(0.0, in_parallel=True)
-        	action4=robot.display_oled_face_image(face_images[6], 5000.0, in_parallel=True)
+        	action4 = robot.display_oled_face_image(face_images[6], 5000.0, in_parallel=True)
+        	action5 = robot.turn_in_place(degrees(360), in_parallel=True)
         	break    
         if keyboard.is_pressed("l"):
         	print("You pressed l")
-        	robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE, duration=6.0, in_parallel=True)
         	action1 = robot.say_text("Nooooooooh",  voice_pitch=-1, in_parallel=True)
         	action2 = robot.set_head_angle(cozmo.robot.MIN_HEAD_ANGLE, in_parallel=True)
-        	action3 = robot.set_lift_height(0.0, in_parallel=True)
-        	action4=robot.display_oled_face_image(face_images[6], 5000.0, in_parallel=True)
+        	action3 = robot.set_lift_height(1.0, in_parallel=True)
+        	action4 = robot.display_oled_face_image(face_images[6], 5000.0, in_parallel=True)  
+        	action5 = robot.drive_straight(distance_mm(-50), speed_mmps(10), in_parallel=True)  	
         	break       
 
     robot.display_oled_face_image(face_images[-1], 5000.0)
      
     while True:
         for image in face_images:
+            robot.set_lift_height(0.0, in_parallel=True)
             robot.display_oled_face_image(image, duration_s * 1000.0)
             time.sleep(duration_s)
         robot.display_oled_face_image(face_images[-1], 2000.0)
