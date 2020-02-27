@@ -1,6 +1,7 @@
 # Gaze and blink for the Cozmo robot
 
-UPDATE: now includes emotional reactions *and* face following! Note the emotional expressions are very early stage.
+UPDATE 1: now includes emotional reactions *and* face following! Note the emotional expressions are very early stage.
+UPDATE 2: now includes a viewer with the output of Cozmo's camera and writes timestamps of the key presses
 
 By Bishakha Chaudhury (https://github.com/chaudhuryB/) and Ruud Hortensius (https://github.com/rhortensius), University of Glasgow, 2019-2020
 
@@ -21,12 +22,14 @@ cozmoclad 1.5.0 : https://pypi.org/project/cozmoclad/1.5.0/
 cozmo 0.14.0    : https://pypi.org/project/cozmo/0.14.0/  
 ```pip install cozmo==0.14.0```   
 
+For the keys we need:
 
+```pip install keyboard```   
 
 •	**Running the script:**
 1.	Turn Cozmo on
 2.	Connect to the SDK
-3.	Run a command, e.g., python gaze.py -n -b
+3.	Run a command, e.g., python gaze.py -n -b (use sudo on a mac for root access)
 
 With the gaze_blink script you can loop left-gaze (natural/standard), right-gaze (natural/standard) or blink. 
 
@@ -41,7 +44,6 @@ Eye animation arguments. The standard and natural has no effect on blink at the 
 e.g. python gaze.py -s -r-n (--natural)	Cozmo's eyes increases and reduces in size depending on gaze direction 
 e.g. python gaze.py -n -r
 
-
 Gaze direction arguments:
 -l (--left)    					Cozmo looks left
 e.g. python gaze.py -s -l -r (--right)		Cozmo looks right
@@ -49,6 +51,11 @@ e.g. python gaze.py -s -r -b (--blink)		Cozmo's eyes look aj=head and blink
 e.g. python gaze.py -n -b 		
 e.g. python gaze.py -n -d
 e.g. python gaze.py -n -u 		 		
+
+•	**Writing a file:**
+To get the output with keypresses and timestamps, do:
+
+(sudo) python3.6 gaze_blink.py -n --u > <filename.txt>
 
 •	**Updating the eyes:**
 
