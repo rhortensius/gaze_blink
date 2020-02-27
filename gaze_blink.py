@@ -137,6 +137,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
         for image in face_images:
             robot.display_oled_face_image(image, duration_s * 1000.0)
             time.sleep(duration_s)
+            #if keyboard.is_pressed('t')
+            #save timestamp...
         robot.display_oled_face_image(face_images[-1], 2000.0)
         time.sleep(2)
         if keyboard.is_pressed("w"):
@@ -156,7 +158,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
         	action5 = robot.drive_straight(distance_mm(-50), speed_mmps(10), in_parallel=True)  	
         	break       
 
-    robot.display_oled_face_image(face_images[-1], 5000.0)
+    robot.display_oled_face_image(face_images[6], 5000.0)
      
     while True:
         for image in face_images:
@@ -234,7 +236,7 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("python 'gaze_blink.py -h (--help) -s (--standard) -n (--natural)> <-l (--left) -r (--right) -b (--blink) -u (--undilated) -d (--dilated)>\n")
     elif handle_input(sys.argv[1:]):
-        cozmo.run_program(cozmo_program)
+        cozmo.run_program(cozmo_program, use_viewer=True, force_viewer_on_top=True)
     exit(0)
     
    
