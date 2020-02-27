@@ -1,9 +1,8 @@
 # Gaze and blink for the Cozmo robot
+By Bishakha Chaudhury (https://github.com/chaudhuryB/) and Ruud Hortensius (https://github.com/rhortensius), University of Glasgow, 2019-2020
 
 UPDATE 1: now includes emotional reactions *and* face following! Note the emotional expressions are very early stage.
 UPDATE 2: now includes a viewer with the output of Cozmo's camera and writes timestamps of the key presses
-
-By Bishakha Chaudhury (https://github.com/chaudhuryB/) and Ruud Hortensius (https://github.com/rhortensius), University of Glasgow, 2019-2020
 
 •	**Install:**
 Before you can run the script you need to install the SDK for Cozmo and some libraries.
