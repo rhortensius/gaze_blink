@@ -24,6 +24,8 @@ face_images = []
 gaze_type = "std_eyes_image"
 gaze_side = "eyes_right"
 
+filename = "test.txt"
+
 def get_in_position(robot: cozmo.robot.Robot):
     '''If necessary, Move Cozmo's Head and Lift to make it easy to see Cozmo's face'''
     if (robot.lift_height.distance_mm > 45) or (robot.head_angle.degrees < 40):
@@ -107,7 +109,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
     #robot.play_audio(cozmo.audio.AudioEvents.Sfx_Flappy_Increase)
 
     print("Press CTRL-C to quit (or wait %s seconds to complete)" % int(num_loops*duration_s) )
-
+    ts = time.time()
+    print(ts) 
     #for _ in range(num_loops):
     face_to_follow = None
     while True:
@@ -137,12 +140,16 @@ def cozmo_program(robot: cozmo.robot.Robot):
         for image in face_images:
             robot.display_oled_face_image(image, duration_s * 1000.0)
             time.sleep(duration_s)
-            #if keyboard.is_pressed('t')
-            #save timestamp...
         robot.display_oled_face_image(face_images[-1], 2000.0)
         time.sleep(2)
+        if keyboard.is_pressed("t"):
+        	print("You pressed t")   
+        	ts = time.time()
+        	print(ts)    
         if keyboard.is_pressed("w"):
         	print("You pressed w")
+        	ts = time.time()
+        	print(ts) 
         	action1 = robot.say_text("Yeaaaaaaaaaaaaaahhh",  voice_pitch=1, in_parallel=True)
         	action2 = robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE, in_parallel=True)
         	action3 = robot.set_lift_height(0.0, in_parallel=True)
@@ -151,6 +158,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
         	break    
         if keyboard.is_pressed("l"):
         	print("You pressed l")
+        	ts = time.time()
+        	print(ts) 
         	action1 = robot.say_text("Nooooooooh",  voice_pitch=-1, in_parallel=True)
         	action2 = robot.set_head_angle(cozmo.robot.MIN_HEAD_ANGLE, in_parallel=True)
         	action3 = robot.set_lift_height(1.0, in_parallel=True)
@@ -169,6 +178,8 @@ def cozmo_program(robot: cozmo.robot.Robot):
         time.sleep(2)
         if keyboard.is_pressed("q"):
         	print("You pressed q")
+        	ts = time.time()
+        	print(ts) 
         	break   
 # Cozmo is moved off his charger contacts by default at the start of any program.
 # This is because not all motor movements are possible whilst drawing current from
